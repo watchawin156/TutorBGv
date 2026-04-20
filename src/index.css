@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sarabun:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', 'Sarabun', sans-serif;
+    @apply text-slate-800;
+    background: #F0F4F8;
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  * {
+    font-style: normal !important;
+  }
+}
+
+@layer components {
+  .font-thnew {
+    font-family: 'Sarabun', sans-serif;
+  }
+  
+  .nickname-secondary {
+    @apply text-[18px] font-bold text-sky-800;
+  }
+
+  .shadow-soft {
+    shadow-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 40px -10px var(--tw-shadow-color), 0 4px 20px -12px var(--tw-shadow-color);
+  }
+
+  .card-premium {
+    @apply bg-white rounded-[32px] border border-white/40 shadow-xl shadow-slate-200/50 backdrop-blur-md;
+  }
+
+  .gradient-blue {
+    background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+  }
+
+  .gradient-purple {
+    background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
+  }
+
+  .gradient-emerald {
+    background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+  }
+
+  /* Scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #CBD5E1 transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #E2E8F0;
+    border-radius: 999px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #CBD5E1;
+  }
+}

@@ -1,0 +1,14 @@
+node_modules
+dist
+.env
+devserver.log
+.codeium
+.agent
+.switchboard
+.cursorrules
+CHECKLIST.md
+AGENTS.md
+package-lock.json
+.vscode
+.github
+*.local
