@@ -119,6 +119,7 @@ const normalizeTransactions = (raw: Transaction[]): Transaction[] => {
       amount: Number(t.amount ?? 0),
       description: t.description ?? '',
       date: t.date ?? new Date().toISOString().split('T')[0],
+      metadata: t.metadata || undefined,
     }));
 };
 
@@ -495,25 +496,38 @@ const App = () => {
   const handleDownloadTimetable = async () => {
     if (timetableRef.current) {
       const el = timetableRef.current;
-      const scrollEl = el.querySelector('.custom-scrollbar') as HTMLElement;
+      const scrollEl = el.querySelector('.custom-scrollbar') as HTMLElement | null;
       
-      const originalOverflowX = el.style.overflowX;
+      const originalStyleStr = el.getAttribute('style') || '';
+      const originalScrollStyleStr = scrollEl ? scrollEl.getAttribute('style') || '' : '';
+      
+      const targetWidth = scrollEl ? Math.max(scrollEl.scrollWidth, scrollEl.offsetWidth) : el.scrollWidth;
+      const targetHeight = scrollEl ? scrollEl.scrollHeight : el.scrollHeight;
+
       if (scrollEl) {
-        scrollEl.style.overflowX = 'visible';
+        scrollEl.style.overflow = 'visible';
+        scrollEl.style.width = `${targetWidth}px`;
+        scrollEl.style.maxWidth = 'none';
       }
+      
+      el.style.width = scrollEl ? `${targetWidth + 40}px` : `${targetWidth}px`;
+      el.style.maxWidth = 'none';
+      el.style.height = 'auto'; // allow expansion
 
       const canvas = await html2canvas(el, {
         backgroundColor: '#ffffff',
         scale: 2,
-        windowWidth: scrollEl ? scrollEl.scrollWidth : el.scrollWidth,
+        windowWidth: scrollEl ? targetWidth + 40 : targetWidth,
+        width: scrollEl ? targetWidth + 40 : targetWidth,
       });
 
+      el.setAttribute('style', originalStyleStr);
       if (scrollEl) {
-        scrollEl.style.overflowX = originalOverflowX;
+        scrollEl.setAttribute('style', originalScrollStyleStr);
       }
 
       const link = document.createElement('a');
-      link.download = `ตารางเรียน.png`;
+      link.download = `ตารางเรียน ${new Date().toISOString().split('T')[0]}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     }

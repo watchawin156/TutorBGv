@@ -18,18 +18,18 @@
    - **Issue:** Typing time like `08.00-10.00` caused `TimetableTab.tsx`'s parsing logic (`timeStr.split(':')`) to break and calculate `width/left` positions incorrectly because it couldn't compute decimals correctly.
    - **Fix:** Added fallback logic to replace strings `.` with `:` (`replace('.', ':')`) and correctly separate minutes from hours to map grid scales perfectly, mirroring the updated check in `RegisterCourseModal.tsx`.
 
+5. **Delete Course Feature Missing `(App.tsx, EditCourseModal.tsx)`**
+   - **Issue:** Users could edit courses but there was no explicit delete feature. 
+   - **Fix:** Added `handleDeleteCourse` inside `App.tsx` and mapped it to a "Delete" button inside `EditCourseModal.tsx`. Included a secondary confirmation prompt. Nested array constraints (`CourseSession` and `attendanceLog`) in the `students` array are orphaned safely.
+
+6. **Transactions Relationship Linking Loose Constraint `(App.tsx, FinanceTab.tsx, data.ts)`**
+   - **Issue:** Transactions globally tracked by String descriptor lacked strong constraints to the course/student ids.
+   - **Fix:** Added `metadata: { studentId: number; courseId: number }` support to `Transaction` type. Refactored `INITIAL_TRANSACTIONS`, `normalizeTransactions()`, and `FinanceTab.tsx` to display real-time formatted descriptions based on active states, retaining backward compatibility for unlinked expenses.
+
+7. **Window Resizing Canvas Logic `(App.tsx)`**
+   - **Issue:** `html2canvas` exported PNGs cut off hidden sections due to `overflow-x-auto` bounding boxes.
+   - **Fix:** Enhanced `handleDownloadTimetable` logic to temporarily unconstrain DOM elements to their full `scrollWidth` and `scrollHeight`, allowing `html2canvas` to perform complete uncropped captures without breaking the view. Includes safe fallback restoration.
+
 ## 🚧 Pending Bugs / Enhancements
 
-1. **Delete Course Feature Missing**
-   - **Issue:** Users can currently edit courses but there is no explicit `onDeleteCourse` function inside `App.tsx` or button inside `EditCourseModal.tsx`. 
-   - **Impact:** Once a course is created, it persists forever.
-   - **Required Fix:** A "Delete" button should be safely added to the Edit Course Modal with a secondary confirmation modal. When a course is deleted, it should also safely orphan/delete nested array constraints (`CourseSession`) in the `students` array to avoid phantom entries.
-
-2. **Transactions Relationship Linking Loose Constraint**
-   - **Issue:** When a student is registered or pays, the global History array is linked by `Date.now()`, but the Transactions `Transactions[]` array matches students/courses roughly only over a String descriptor `(นักเรียน: ${student.name})`.
-   - **Impact:** If a user renames a student/course, the Finance Tab logs won't reflect the new name, causing minor UX discrepancy.
-   - **Suggested Fix:** Change `Transaction` type to include metadata object `metadata?: { studentId: number; courseId: number }` so frontend rendering can dynamically format names.
-
-3. **Window Resizing Canvas Logic**
-   - **Issue:** `html2canvas` is being used to export the Timetable as a PNG. On smaller mobile screens, the `overflow-x-auto` might cut off hidden sections of the table during render.
-   - **Suggested Fix:** Temporarily scale up the DOM element to its full `scrollWidth` / `scrollHeight` during `html2canvas` captures to ensure no cropped data.
+*(No pending bugs currently)*

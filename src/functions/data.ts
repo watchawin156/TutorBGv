@@ -12,7 +12,7 @@ export const INITIAL_COURSES: Course[] = [
 ];
 
 export const INITIAL_TRANSACTIONS: Transaction[] = [
-  { id: 'tx1', type: 'income', category: 'ค่าเรียน', amount: 3500, description: 'สมชาย รักเรียน (คณิตศาสตร์ ม.4)', date: '2024-01-15' },
+  { id: 'tx1', type: 'income', category: 'ค่าเรียน', amount: 3500, description: 'สมชาย รักเรียน (คณิตศาสตร์ ม.4)', date: '2024-01-15', metadata: { studentId: 1, courseId: 1 } },
 ];
 
 export const DAYS_OF_WEEK = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
