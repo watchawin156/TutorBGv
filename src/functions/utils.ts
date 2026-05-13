@@ -1,3 +1,10 @@
+export const formatPhone = (val: string): string => {
+  const v = val.replace(/\D/g, '').slice(0, 10);
+  if (v.length > 3 && v.length <= 6) return v.slice(0, 3) + '-' + v.slice(3);
+  if (v.length > 6) return v.slice(0, 3) + '-' + v.slice(3, 6) + '-' + v.slice(6);
+  return v;
+};
+
 export const formatThaiDateNumeric = (dateStr: string | undefined): string => {
   if (!dateStr) return '';
   const [y, m, d] = dateStr.split('T')[0].split('-');

@@ -62,9 +62,65 @@ export const TimetableTab: React.FC<TimetableTabProps> = ({ courses, timetableRe
   };
 
   return (
-    <div ref={timetableRef} className="w-full h-full flex flex-col space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700 overflow-hidden min-h-[500px]">
+    <div ref={timetableRef} className="w-full h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-700 overflow-hidden md:min-h-[500px]">
+      
+      {/* Mobile View: Vertical List */}
+      <div className="md:hidden flex-1 overflow-y-auto hide-scrollbar flex flex-col gap-6 pt-2 h-full relative z-10">
+         {weekDays.map(day => {
+            const dayCourses = courses.flatMap(c => 
+               c.schedule.filter(s => s.day === day).map(s => ({ course: c, slot: s }))
+            );
+            if (dayCourses.length === 0) return null;
 
-      <div className="flex-1 bg-white rounded-3xl lg:rounded-[40px] shadow-figma-soft border border-slate-100 flex flex-col overflow-y-auto overflow-x-auto custom-scrollbar">
+            // sort by start time
+            dayCourses.sort((a, b) => parseTime(a.slot.time).start - parseTime(b.slot.time).start);
+            const theme = DAY_THEMES[day] || { bg: 'bg-slate-50', text: 'text-slate-900', border: 'border-slate-200' };
+
+            return (
+               <div key={day} className="flex flex-col gap-3">
+                  <h3 className={`${FONT.H5} ${theme.text} mb-1 flex items-center gap-2`}>
+                     <div className={`w-3 h-3 rounded-full ${theme.solid || 'bg-slate-900'}`} />
+                     วัน{day}
+                  </h3>
+                  <div className="flex flex-col gap-3">
+                     {dayCourses.map(({ course, slot }, idx) => (
+                        <div 
+                           key={`${course.id}-${idx}`}
+                           onClick={() => onViewCourse(course)}
+                           className={`p-4 rounded-xl ${theme.bg} ${theme.border} border-l-[6px] shadow-[0_2px_10px_rgba(0,0,0,0.04)] hover:shadow-lg active:scale-95 transition-all flex flex-col justify-between gap-3 border-y border-r border-y-transparent border-r-transparent`}
+                        >
+                           <div className="flex flex-col min-w-0">
+                              <h4 className={`text-[15px] font-black text-slate-800 leading-tight break-words line-clamp-3`}>{course.name}</h4>
+                              <div className="flex items-center gap-2 mt-1.5">
+                                 <Clock size={14} className={theme.text} />
+                                 <span className={`text-[14px] font-bold ${theme.text} leading-none`}>{slot.time}</span>
+                              </div>
+                           </div>
+                           <div className="flex items-center justify-between mt-1 shrink-0">
+                               <div className="flex items-center gap-1.5 opacity-80 text-slate-700">
+                                  <Users size={16} className="text-slate-700" />
+                                  <span className={`text-[14px] font-medium leading-none`}>{course.students.length}</span>
+                               </div>
+                               <button
+                                  onClick={(e) => { e.stopPropagation(); onCheckAttendance(course); }}
+                                  className={`w-8 h-8 rounded-full bg-white text-slate-700 flex items-center justify-center shadow-sm hover:shadow-md transition-all shrink-0`}
+                               >
+                                  <UserCheck size={14} />
+                               </button>
+                           </div>
+                        </div>
+                     ))}
+                  </div>
+               </div>
+            );
+         })}
+         {courses.length === 0 && (
+            <div className="text-center text-slate-400 mt-10">ยังไม่มีตารางเรียน</div>
+         )}
+      </div>
+
+      {/* Desktop View: Grid Timeline */}
+      <div className="hidden md:flex flex-1 bg-white xl:rounded-2xl shadow-sm border border-slate-100 flex-col overflow-y-auto overflow-x-auto custom-scrollbar lg:mx-0">
         {/* ส่วนหัว: ช่วงเวลา */}
         <div className="grid grid-cols-[80px_1fr] md:grid-cols-[112px_1fr] min-w-[800px] lg:min-w-0 border-b border-slate-50 bg-slate-50/50 shrink-0">
           <div className={`p-3 md:p-5 border-r border-slate-50 ${FONT.CAPTION_BLACK} text-slate-900 uppercase flex items-center justify-center text-xs md:text-sm`}>วัน / เวลา</div>
@@ -80,7 +136,7 @@ export const TimetableTab: React.FC<TimetableTabProps> = ({ courses, timetableRe
         {/* ส่วนเนื้อหา: วันต่างๆ */}
         <div className="flex-1 flex flex-col divide-y divide-slate-50 overflow-hidden min-w-[800px] lg:min-w-0 bg-white">
           {weekDays.map(day => (
-            <div key={day} className="grid grid-cols-[80px_1fr] md:grid-cols-[112px_1fr] flex-1 min-h-[120px] relative group">
+            <div key={day} className="grid grid-cols-[80px_1fr] md:grid-cols-[112px_1fr] flex-1 min-h-[140px] relative group">
               {/* คอลัมน์วัน */}
               <div className="border-r border-slate-50 flex items-center justify-center shrink-0 bg-slate-50/20">
                 <span className={`${FONT.LABEL_BLACK} ${DAY_THEMES[day]?.text || 'text-slate-800'}`}>{day}</span>
@@ -114,21 +170,30 @@ export const TimetableTab: React.FC<TimetableTabProps> = ({ courses, timetableRe
                           <div
                             key={`${course.id}-${idx}`}
                             onClick={() => onViewCourse(course)}
-                            className={`absolute top-1.5 bottom-1.5 ${theme.bg} ${theme.border} border-l-4 rounded-xl shadow-sm hover:shadow-xl hover:scale-[101%] transition-all cursor-pointer group/card overflow-hidden z-20 flex flex-col p-2.5 min-w-[70px] max-w-full`}
+                            className={`absolute top-1.5 bottom-1.5 ${theme.bg} ${theme.border} border-l-[6px] rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.04)] hover:shadow-lg hover:scale-[1.01] transition-all cursor-pointer group/card overflow-hidden z-20 flex flex-col justify-between py-2.5 px-3 min-w-[80px] border-y border-r border-y-transparent border-r-transparent`}
                             style={{
                               left: `${left}%`,
                               width: `${width}%`
                             }}
                           >
-                            <div className="flex flex-col flex-1 overflow-hidden">
-                                <h4 className="text-[16px] font-bold leading-snug text-black break-words line-clamp-2">
+                            <div className="flex flex-col flex-1 min-h-0 mb-1">
+                                <h4 className="text-[13px] lg:text-[14px] font-black leading-tight text-slate-800 break-words line-clamp-3">
                                   {course.name}
                                 </h4>
-                                <p className={`text-[14px] font-bold ${theme.text} leading-none mt-1.5 shrink-0`}>{s.time}</p>
+                                <p className={`text-[12px] lg:text-[13px] font-bold ${theme.text} leading-none mt-1.5 shrink-0`}>{s.time}</p>
                             </div>
-                            <div className="flex items-center gap-1.5 opacity-80 mt-1.5 shrink-0">
-                                <Users size={14} className="text-black" />
-                                <span className="text-[14px] font-normal text-black leading-none">{course.students.length}</span>
+                            <div className="flex items-center justify-between mt-auto shrink-0 w-full relative">
+                                <div className="flex items-center gap-1.5 opacity-80 text-slate-700">
+                                    <Users size={16} className="text-slate-700" />
+                                    <span className="text-[14px] font-medium leading-none mt-0.5">{course.students.length}</span>
+                                </div>
+                                <button
+                                   onClick={(e) => { e.stopPropagation(); onCheckAttendance(course); }}
+                                   title="เช็กชื่อ"
+                                   className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-white text-slate-700 flex items-center justify-center shadow-sm hover:shadow-md transition-all shrink-0 ml-2"
+                                >
+                                   <UserCheck size={14} />
+                                </button>
                             </div>
                           </div>
                         );

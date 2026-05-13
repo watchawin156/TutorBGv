@@ -10,28 +10,37 @@ interface NavItemProps {
   isSidebarHovered: boolean;
 }
 
-export const NavItem: React.FC<NavItemProps> = ({ id, icon: Icon, label, activeTab, setActiveTab, isSidebarHovered }) => {
+export const NavItem: React.FC<NavItemProps> = ({ 
+  id, 
+  icon: Icon, 
+  label, 
+  activeTab, 
+  setActiveTab, 
+  isSidebarHovered
+}) => {
   const isActive = activeTab === id;
   
+  const activeStyles = 'bg-indigo-50 text-indigo-600 shadow-sm font-semibold';
+    
+  const inactiveStyles = 'text-slate-500 hover:bg-slate-50 hover:text-slate-800';
+
   return (
     <button
       onClick={() => setActiveTab(id)}
-      className={`w-full flex items-center transition-all duration-300 rounded-[20px] ${
-        isSidebarHovered ? 'px-5 py-4 gap-4' : 'p-4 justify-center'
+      className={`w-full flex items-center transition-all duration-300 rounded-xl ${
+        isSidebarHovered ? 'px-4 py-3 gap-3' : 'p-3 mx-1 justify-center'
       } ${
-        isActive 
-          ? 'bg-blue-50 text-blue-600' 
-          : 'text-slate-900 hover:bg-slate-50 hover:text-slate-600'
+        isActive ? activeStyles : inactiveStyles
       }`}
     >
-      <Icon size={22} className={`${isActive ? 'stroke-[3px]' : 'stroke-[2px]'} shrink-0`} />
-      <span className={`${FONT.BODY_SM} whitespace-nowrap transition-all duration-300 ${
+      <Icon size={20} className={`${isActive ? 'stroke-[2.5px]' : 'stroke-[2px]'} shrink-0`} />
+      <span className={`${FONT.BODY_SM} ${isActive ? 'font-bold' : 'font-medium'} whitespace-nowrap transition-all duration-300 ${
         isSidebarHovered ? 'opacity-100 w-auto' : 'opacity-0 w-0 absolute'
       }`}>
          {label}
       </span>
       {isActive && isSidebarHovered && (
-        <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_10px_#3B82F6]" />
+        <div className="ml-auto w-[6px] h-[6px] rounded-full bg-indigo-500 shadow-sm" />
       )}
     </button>
   );

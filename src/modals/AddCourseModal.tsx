@@ -16,99 +16,94 @@ export const AddCourseModal: React.FC<AddCourseModalProps> = ({ show, onClose, n
   const days = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
 
   return (
-    <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
-      <div className="bg-white rounded-[32px] w-full max-w-lg overflow-hidden shadow-2xl animate-in slide-in-from-bottom-8 duration-300 border border-slate-100 flex flex-col max-h-[90vh]">
-        <div className="p-6 border-b border-slate-50 flex items-center justify-between bg-white shrink-0">
-          <div>
-            <h3 className={`${FONT.H5} lg:${FONT.H4} text-slate-900`}>เพิ่มรายวิชาใหม่</h3>
-            <p className={`text-slate-900 ${FONT.LABEL}`}>ตั้งค่าชื่อวิชา ห้องเรียน และวันเรียน</p>
-          </div>
-          <button onClick={onClose} type="button" className="p-2.5 hover:bg-slate-50 text-slate-900 hover:text-slate-900 rounded-xl transition-all"><X size={22} /></button>
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center sm:p-4 animate-in fade-in duration-300">
+      <div className="bg-white rounded-xl w-full h-full sm:h-auto max-w-xl shadow-[0_4px_24px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-300 max-h-[100dvh] sm:max-h-[90vh]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#d9dee3] bg-white shrink-0">
+           <div className="flex items-center gap-2">
+              <h3 className="text-[18px] font-semibold text-[#566a7f]">เพิ่มรายวิชาใหม่</h3>
+              <span className="text-[13px] text-[#a1acb8] font-normal leading-relaxed">ตั้งค่าชื่อวิชา ห้องเรียน และวันเรียน</span>
+           </div>
+           <button onClick={onClose} type="button" className="text-[#a1acb8] hover:text-[#566a7f] transition-colors"><X size={20} /></button>
         </div>
         
-        <form onSubmit={onSubmit} className="p-8 space-y-5 overflow-y-auto custom-scrollbar">
-          <div className="space-y-4">
-             <div className="space-y-2">
-                <label className={`${FONT.LABEL_BLACK} text-slate-900 uppercase ml-1 flex items-center gap-2`}>
-                   <BookOpen size={14} className="text-sky-500" /> ชื่อวิชาเรียน
-                </label>
-                <input required type="text" value={newCourse.name} onChange={e => setNewCourse({...newCourse, name: e.target.value})} className={`w-full bg-slate-50 border border-transparent rounded-[18px] px-6 py-3.5 ${FONT.BODY_SM} text-slate-900 outline-none focus:bg-white focus:border-sky-500 transition-all shadow-sm`} placeholder="เช่น คณิตศาสตร์ ม.4..." />
-             </div>
+        <form onSubmit={onSubmit} className="flex flex-col flex-1 overflow-hidden">
+          <div className="px-6 py-5 overflow-y-auto space-y-5 custom-scrollbar">
+            <div className="space-y-4">
+               <div className="space-y-1.5">
+                  <label className="text-[13px] font-medium text-[#566a7f] ml-1">ชื่อวิชาเรียน</label>
+                  <input required type="text" value={newCourse.name} onChange={e => setNewCourse({...newCourse, name: e.target.value})} className="w-full bg-white border border-[#d9dee3] rounded-md px-4 py-2.5 text-[15px] font-medium text-[#566a7f] outline-none hover:border-[#b4bdc6] focus:border-[#696cff] focus:ring-2 focus:ring-[#696cff]/20 transition-all placeholder:text-[#a1acb8]" placeholder="เช่น คณิตศาสตร์ ม.4..." />
+               </div>
 
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                   <label className={`${FONT.LABEL_BLACK} text-slate-900 uppercase ml-1 flex items-center gap-2`}>
-                      <MapPin size={14} className="text-sky-500" /> ห้องเรียน
-                   </label>
-                   <input required type="text" value={newCourse.room} onChange={e => setNewCourse({...newCourse, room: e.target.value})} className={`w-full bg-slate-50 border border-transparent rounded-[18px] px-6 py-3.5 ${FONT.BODY_SM} text-slate-900 outline-none focus:bg-white focus:border-sky-500 transition-all shadow-sm`} placeholder="ห้อง..." />
-                </div>
-                <div className="space-y-2">
-                   <label className={`${FONT.LABEL_BLACK} text-slate-900 uppercase ml-1 flex items-center gap-2`}>
-                      <Hash size={14} className="text-sky-500" /> จำนวนครั้งที่เรียน (คอร์ส)
-                   </label>
-                   <input required type="number" value={newCourse.sessions} onChange={e => setNewCourse({...newCourse, sessions: e.target.value})} className={`w-full bg-slate-50 border border-transparent rounded-[18px] px-6 py-3.5 ${FONT.BODY_SM} text-slate-900 outline-none focus:bg-white focus:border-sky-500 transition-all shadow-sm`} placeholder="เช่น 10..." />
-                </div>
-             </div>
-             
-             <div className="space-y-2">
-                <label className={`${FONT.LABEL_BLACK} text-slate-900 uppercase ml-1 flex items-center gap-2`}>
-                   <DollarSign size={14} className="text-sky-500" /> ราคา (บาท)
-                </label>
-                <input required type="number" value={newCourse.price} onChange={e => setNewCourse({...newCourse, price: e.target.value})} className={`w-full bg-slate-50 border border-transparent rounded-[18px] px-6 py-3.5 ${FONT.BODY_SM} text-slate-900 outline-none focus:bg-white focus:border-sky-500 transition-all shadow-sm`} placeholder="ราคา..." />
-             </div>
-          </div>
-
-          <div className="pt-2 space-y-4">
-            <div className="flex items-center justify-between">
-               <label className={`${FONT.LABEL_BLACK} text-slate-900 uppercase ml-1 flex items-center gap-2`}>
-                  <Calendar size={14} className="text-sky-500" /> ตารางเรียนรายสัปดาห์
-               </label>
-               <button type="button" onClick={() => setNewCourse({...newCourse, schedule: [...newCourse.schedule, {day: 'จันทร์', time: ''}]})} className={`${FONT.LABEL_SM_BLACK} text-sky-600 flex items-center gap-1.5 hover:text-sky-700 bg-sky-50 px-3 py-1.5 rounded-xl transition-colors border border-sky-100`}>
-                  <Plus size={14} className="stroke-[3px]" /> เพิ่มวันเรียน
-               </button>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                     <label className="text-[13px] font-medium text-[#566a7f] ml-1">ห้องเรียน</label>
+                     <input required type="text" value={newCourse.room} onChange={e => setNewCourse({...newCourse, room: e.target.value})} className="w-full bg-white border border-[#d9dee3] rounded-md px-4 py-2.5 text-[15px] font-medium text-[#566a7f] outline-none hover:border-[#b4bdc6] focus:border-[#696cff] focus:ring-2 focus:ring-[#696cff]/20 transition-all placeholder:text-[#a1acb8]" placeholder="ห้อง..." />
+                  </div>
+                  <div className="space-y-1.5">
+                     <label className="text-[13px] font-medium text-[#566a7f] ml-1">จำนวนครั้งที่เรียน (คอร์ส)</label>
+                     <input required type="number" value={newCourse.sessions} onChange={e => setNewCourse({...newCourse, sessions: e.target.value})} className="w-full bg-white border border-[#d9dee3] rounded-md px-4 py-2.5 text-[15px] font-medium text-[#566a7f] outline-none hover:border-[#b4bdc6] focus:border-[#696cff] focus:ring-2 focus:ring-[#696cff]/20 transition-all placeholder:text-[#a1acb8]" placeholder="เช่น 10..." />
+                  </div>
+               </div>
+               
+               <div className="space-y-1.5">
+                  <label className="text-[13px] font-medium text-[#566a7f] ml-1">ราคา (บาท)</label>
+                  <div className="relative group">
+                     <DollarSign size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#a1acb8] group-focus-within:text-[#696cff] transition-colors" />
+                     <input required type="number" value={newCourse.price} onChange={e => setNewCourse({...newCourse, price: e.target.value})} className="w-full bg-white border border-[#d9dee3] rounded-md py-2.5 pl-11 pr-4 text-[15px] font-medium text-[#566a7f] outline-none hover:border-[#b4bdc6] focus:border-[#696cff] focus:ring-2 focus:ring-[#696cff]/20 transition-all placeholder:text-[#a1acb8]" placeholder="ราคา..." />
+                  </div>
+               </div>
             </div>
-            
-            <div className="space-y-3">
-              {newCourse.schedule.map((item: any, index: number) => (
-                <div key={index} className="flex items-center gap-2 bg-slate-50 p-2.5 rounded-[18px] border border-slate-100/50 group/item">
-                   <select 
-                     value={item.day}
-                     onChange={(e) => {
-                        const newSchedule = [...newCourse.schedule];
-                        newSchedule[index].day = e.target.value;
-                        setNewCourse({...newCourse, schedule: newSchedule});
-                     }}
-                     className={`w-[100px] bg-white border border-slate-200 rounded-xl px-3 py-2 ${FONT.LABEL} text-slate-900 outline-none focus:border-sky-500 transition-all cursor-pointer shadow-sm`}
-                   >
-                     {days.map(d => <option key={d} value={d}>{d}</option>)}
-                   </select>
-                   <div className="flex-1 relative">
-                      <Clock size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-900" />
-                      <input 
-                        type="text" 
-                        placeholder="08.00-10.00"
-                        value={item.time}
-                        onChange={(e) => {
-                           const newSchedule = [...newCourse.schedule];
-                           newSchedule[index].time = e.target.value;
-                           setNewCourse({...newCourse, schedule: newSchedule});
-                        }}
-                        className={`w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 ${FONT.LABEL} text-slate-900 outline-none focus:border-sky-500 transition-all shadow-sm`}
-                      />
-                   </div>
-                   {newCourse.schedule.length > 1 && (
-                     <button type="button" onClick={() => setNewCourse({...newCourse, schedule: newCourse.schedule.filter((_: any, i: number) => i !== index)})} className="p-2 text-slate-900 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all opacity-0 group-hover/item:opacity-100">
-                        <X size={18} />
-                     </button>
-                   )}
-                </div>
-              ))}
+
+            <div className="pt-2 space-y-4">
+              <div className="flex items-center justify-between">
+                 <label className="text-[13px] font-medium text-[#566a7f] ml-1">ตารางเรียนรายสัปดาห์</label>
+                 <button type="button" onClick={() => setNewCourse({...newCourse, schedule: [...newCourse.schedule, {day: 'จันทร์', time: ''}]})} className="text-[12px] font-semibold text-[#696cff] flex items-center gap-1.5 hover:text-[#5f61e6] bg-[#696cff]/10 px-3 py-1.5 rounded-md transition-colors">
+                    <Plus size={14} /> เพิ่มวันเรียน
+                 </button>
+              </div>
+              
+              <div className="space-y-3">
+                {newCourse.schedule.map((item: any, index: number) => (
+                  <div key={index} className="flex items-center gap-2 bg-slate-50 p-2.5 rounded-lg border border-[#d9dee3] group/item">
+                     <select 
+                       value={item.day}
+                       onChange={(e) => {
+                          const newSchedule = [...newCourse.schedule];
+                          newSchedule[index].day = e.target.value;
+                          setNewCourse({...newCourse, schedule: newSchedule});
+                       }}
+                       className="w-[100px] bg-white border border-[#d9dee3] rounded-md px-3 py-2 text-[14px] text-[#566a7f] outline-none hover:border-[#b4bdc6] focus:border-[#696cff] focus:ring-2 focus:ring-[#696cff]/20 transition-all cursor-pointer"
+                     >
+                       {days.map(d => <option key={d} value={d}>{d}</option>)}
+                     </select>
+                     <div className="flex-1 relative group/time">
+                        <Clock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a1acb8] group-focus-within/time:text-[#696cff] transition-colors" />
+                        <input 
+                          type="text" 
+                          placeholder="08.00-10.00"
+                          value={item.time}
+                          onChange={(e) => {
+                             const newSchedule = [...newCourse.schedule];
+                             newSchedule[index].time = e.target.value;
+                             setNewCourse({...newCourse, schedule: newSchedule});
+                          }}
+                          className="w-full bg-white border border-[#d9dee3] rounded-md pl-10 pr-4 py-2 text-[14px] text-[#566a7f] outline-none hover:border-[#b4bdc6] focus:border-[#696cff] focus:ring-2 focus:ring-[#696cff]/20 transition-all placeholder:text-[#a1acb8]"
+                        />
+                     </div>
+                     {newCourse.schedule.length > 1 && (
+                       <button type="button" onClick={() => setNewCourse({...newCourse, schedule: newCourse.schedule.filter((_: any, i: number) => i !== index)})} className="p-2 text-[#a1acb8] hover:text-[#ff3e1d] hover:bg-[#ffe2e3] rounded-md transition-all opacity-0 group-hover/item:opacity-100">
+                          <X size={16} />
+                       </button>
+                     )}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="flex gap-3 pt-6 shrink-0 sticky bottom-0 bg-white">
-            <button type="button" onClick={onClose} className={`flex-1 bg-white hover:bg-slate-50 text-slate-900 ${FONT.LABEL} py-4 rounded-[20px] transition-all border border-slate-100`}>ยกเลิก</button>
-            <button type="submit" className={`flex-[2] gradient-blue text-white ${FONT.LABEL_BLACK} py-4 rounded-[20px] transition-all shadow-xl shadow-blue-200 active:scale-95 hover:scale-[1.02]`}>บันทึกรายวิชา</button>
+          <div className="px-6 py-4 border-t border-[#d9dee3] flex gap-3 justify-end shrink-0 bg-slate-50/50">
+            <button type="button" onClick={onClose} className="px-5 py-2 rounded-md border border-[#d9dee3] text-[#566a7f] font-medium hover:bg-[#f8f9fa] transition-colors text-[14px]">ยกเลิก</button>
+            <button type="submit" className="px-6 py-2 rounded-md font-medium text-[14px] bg-[#696cff] text-white hover:bg-[#5f61e6] hover:-translate-y-[1px] hover:shadow-[0_4px_12px_rgba(105,108,255,0.4)] transition-all">บันทึกรายวิชา</button>
           </div>
         </form>
       </div>

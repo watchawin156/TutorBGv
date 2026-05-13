@@ -14,24 +14,24 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ show, onClose, title
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-[300] flex items-center justify-center p-4 animate-in fade-in duration-300">
-      <div className="bg-white rounded-[32px] w-full max-w-sm overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 border border-slate-100 flex flex-col items-center p-8 text-center">
-        <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center text-white mb-6 shadow-lg shadow-emerald-100 animate-bounce">
-          <CheckCircle size={40} className="stroke-[3px]" />
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[300] flex items-center justify-center p-4 animate-in fade-in duration-300">
+      <div className="bg-white rounded-xl w-full max-w-sm overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.15)] animate-in zoom-in-95 duration-300 flex flex-col items-center p-6 text-center">
+        <div className="w-16 h-16 bg-[#e8fadf] rounded-full flex items-center justify-center text-[#71dd37] mb-6">
+          <CheckCircle size={32} />
         </div>
         
-        <h3 className={`${FONT.H4} text-slate-900 mb-2`}>{title}</h3>
-        <p className={`text-slate-900 ${FONT.LABEL} mb-6 leading-relaxed px-4`}>{message}</p>
+        <h3 className="text-[20px] font-semibold text-[#566a7f] mb-2">{title}</h3>
+        <p className="text-[14px] text-[#a1acb8] mb-6 leading-relaxed px-4">{message}</p>
         
         {details && details.length > 0 && (
-          <div className="w-full bg-slate-50 rounded-2xl p-4 mb-6 space-y-3">
+          <div className="w-full bg-slate-50/50 border border-[#d9dee3] rounded-md p-4 mb-6 space-y-3">
             {details.map((item, i) => (
-              <div key={i} className={`flex justify-between items-center ${FONT.LABEL_SM}`}>
-                <span className="text-slate-900 font-bold flex items-center gap-2">
-                   {item.label === 'วิชา' ? <ShoppingBag size={12} /> : item.label === 'น้อง' ? <User size={12} /> : <CreditCard size={12} />}
+              <div key={i} className="flex justify-between items-center text-[13px]">
+                <span className="text-[#a1acb8] font-medium flex items-center gap-2">
+                   {item.label === 'วิชา' ? <ShoppingBag size={14} /> : item.label === 'น้อง' ? <User size={14} /> : <CreditCard size={14} />}
                    {item.label}
                 </span>
-                <span className={`text-slate-900 ${FONT.LABEL_SM_BLACK}`}>{item.value}</span>
+                <span className="text-[#566a7f] font-semibold">{item.value}</span>
               </div>
             ))}
           </div>
@@ -39,7 +39,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ show, onClose, title
         
         <button 
           onClick={onClose} 
-          className={`w-full bg-slate-900 hover:bg-slate-800 text-white ${FONT.LABEL_BLACK} py-4 rounded-2xl transition-all shadow-lg active:scale-95`}
+          className="w-full bg-[#696cff] hover:bg-[#5f61e6] text-white text-[15px] font-medium py-2.5 rounded-md transition-all shadow-[0_4px_12px_rgba(105,108,255,0.4)] hover:-translate-y-[1px]"
         >
           ตกลง
         </button>

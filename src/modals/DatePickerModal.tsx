@@ -83,32 +83,32 @@ export const DatePickerModal: React.FC<DatePickerModalProps> = ({ show, onClose,
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xl z-[150] flex items-center justify-center p-4 animate-in fade-in duration-500">
-      <div className="bg-white rounded-[40px] w-full max-w-md overflow-hidden shadow-2xl animate-in slide-in-from-bottom-10 duration-500 border border-slate-100 flex flex-col">
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[200] flex items-center justify-center p-0 md:p-4 animate-in fade-in duration-300">
+      <div className="bg-white rounded-none md:rounded-xl w-full h-full md:h-auto max-w-sm overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.15)] animate-in zoom-in-95 duration-300 border-0 md:border border-[#d9dee3] flex flex-col max-h-[100dvh]">
         {/* Header */}
-        <div className="p-7 border-b border-slate-50 flex items-center justify-between bg-gradient-to-r from-sky-50/30 to-white shrink-0">
-          <div>
-            <h3 className={`${FONT.H5} font-extrabold text-slate-900 leading-none`}>เลือกวันที่เช็คชื่อ</h3>
-            <p className={`text-slate-900 ${FONT.LABEL} mt-1.5 uppercase`}>ปฏิทินเลือกวัน</p>
+        <div className="px-6 py-4 border-b border-[#d9dee3] flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2 text-[#566a7f]">
+            <CalendarIcon size={20} className="text-[#696cff]" />
+            <h3 className="text-[18px] font-semibold leading-none">เลือกวันที่เช็คชื่อ</h3>
           </div>
-          <button onClick={onClose} className="p-3 bg-slate-50 text-slate-900 hover:bg-rose-50 hover:text-rose-600 rounded-2xl transition-all hover:rotate-90"><X size={20} /></button>
+          <button onClick={onClose} className="text-[#a1acb8] hover:text-[#566a7f] transition-all"><X size={20} /></button>
         </div>
 
-        <div className="p-6 md:p-8 space-y-6 flex-1 text-slate-900">
+        <div className="p-6 space-y-4 flex-1 text-slate-900 overflow-y-auto">
           {/* Month Selector */}
-          <div className="flex items-center justify-between bg-slate-50 p-2 rounded-2xl">
-            <button onClick={handlePrevMonth} className="p-2.5 hover:bg-white hover:shadow-sm rounded-xl transition-all text-slate-600"><ChevronLeft size={20} /></button>
-            <div className={`${FONT.BODY_LG} font-black text-slate-900`}>
+          <div className="flex items-center justify-between">
+            <button type="button" onClick={handlePrevMonth} className="p-2 hover:bg-[#f8f9fa] rounded-md transition-all text-[#a1acb8] hover:text-[#566a7f] border border-transparent hover:border-[#d9dee3]"><ChevronLeft size={20} /></button>
+            <div className="text-[15px] font-semibold text-[#566a7f]">
               {months[currentMonth]} {currentYear + 543}
             </div>
-            <button onClick={handleNextMonth} className="p-2.5 hover:bg-white hover:shadow-sm rounded-xl transition-all text-slate-600"><ChevronRight size={20} /></button>
+            <button type="button" onClick={handleNextMonth} className="p-2 hover:bg-[#f8f9fa] rounded-md transition-all text-[#a1acb8] hover:text-[#566a7f] border border-transparent hover:border-[#d9dee3]"><ChevronRight size={20} /></button>
           </div>
 
           {/* Calendar Grid */}
-          <div className="grid grid-cols-7 gap-1">
+          <div className="grid grid-cols-7 gap-y-2">
             {/* Weekday headers */}
             {days.map(day => (
-              <div key={day} className={`text-center py-2 ${FONT.LABEL_BLACK} text-slate-900 uppercase`}>{day}</div>
+              <div key={day} className="text-center py-2 text-[12px] font-bold text-[#566a7f] uppercase">{day}</div>
             ))}
             
             {/* Blank spaces */}
@@ -121,32 +121,30 @@ export const DatePickerModal: React.FC<DatePickerModalProps> = ({ show, onClose,
                const selected = isSelected(day);
                const today = isToday(day);
                return (
-                  <button
-                    key={day}
-                    onClick={() => handleDateSelect(day)}
-                    className={`
-                      py-2.5 rounded-xl ${FONT.BODY_MD} font-bold transition-all relative group
-                      ${selected ? 'bg-sky-600 text-white shadow-lg shadow-sky-200' : 'hover:bg-sky-50 text-slate-700'}
-                      ${today && !selected ? 'text-sky-600' : ''}
-                    `}
-                  >
-                    {day}
-                    {today && !selected && (
-                       <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-sky-600 rounded-full" />
-                    )}
-                  </button>
+                  <div key={day} className="flex justify-center">
+                    <button
+                      onClick={() => handleDateSelect(day)}
+                      className={`
+                        w-9 h-9 rounded-full text-[14px] font-medium transition-all flex items-center justify-center relative
+                        ${selected ? 'bg-[#696cff] text-white shadow-[0_4px_12px_rgba(105,108,255,0.4)]' : 'hover:bg-[#f8f9fa] text-[#566a7f]'}
+                        ${today && !selected ? 'text-[#696cff] font-bold' : ''}
+                      `}
+                    >
+                      {day}
+                    </button>
+                  </div>
                );
             })}
           </div>
+        </div>
 
-          <div className="pt-2">
-             <button 
-               onClick={handleToday}
-               className={`w-full bg-slate-50 hover:bg-slate-100 text-slate-800 ${FONT.BODY_MD} font-black py-4 rounded-2xl transition-all border border-slate-100`}
-             >
-                เลือกวันนี้
-             </button>
-          </div>
+        <div className="px-6 py-4 border-t border-[#d9dee3] bg-slate-50/50 shrink-0">
+           <button 
+             onClick={handleToday}
+             className="w-full bg-white hover:bg-[#f8f9fa] text-[#566a7f] text-[15px] font-medium py-2.5 rounded-md transition-all border border-[#d9dee3]"
+           >
+              เลือกวันนี้
+           </button>
         </div>
       </div>
     </div>

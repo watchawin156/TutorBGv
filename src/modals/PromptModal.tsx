@@ -23,40 +23,40 @@ export const PromptModal: React.FC<PromptModalProps> = ({ show, message, expecte
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[200] flex items-center justify-center p-4 animate-in fade-in duration-300">
-      <div className="bg-white popup-card rounded-[32px] w-full max-w-md shadow-2xl overflow-hidden flex flex-col border border-slate-100 animate-in zoom-in-95 duration-300">
+      <div className="bg-white rounded-xl w-full max-w-sm shadow-[0_4px_24px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col animate-in zoom-in-95 duration-300">
         
-        <div className="p-8 flex flex-col items-center text-center">
-          <div className="w-16 h-16 bg-sky-100 text-sky-500 rounded-full flex items-center justify-center mb-6">
-            <HelpCircle size={32} className="stroke-[2.5px]" />
+        <div className="p-6 flex flex-col items-center text-center">
+          <div className="w-12 h-12 bg-[#d7f5fc] text-[#03c3ec] rounded-full flex items-center justify-center mb-4">
+            <HelpCircle size={24} />
           </div>
-          <h3 className={`${FONT.H4} text-slate-900 mb-2`}>ยืนยันการทำรายการ</h3>
-          <p className={`${FONT.BODY_SM} text-slate-900 leading-relaxed whitespace-pre-line`}>{message}</p>
+          <h3 className="text-[18px] font-semibold text-[#566a7f] mb-1">ยืนยันการทำรายการ</h3>
+          <p className="text-[14px] text-[#a1acb8] leading-relaxed whitespace-pre-line mb-6">{message}</p>
           
-          <div className="w-full mt-6 space-y-2">
+          <div className="w-full">
             <input 
               type="text" 
               value={input} 
               onChange={e => setInput(e.target.value)} 
-              className={`w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-4 text-center ${FONT.BODY_LG} font-black focus:ring-4 focus:ring-sky-50 focus:border-sky-200 transition-all outline-none text-slate-900`} 
+              className="w-full bg-white border border-[#d9dee3] rounded-md px-4 py-2.5 text-center text-[15px] font-medium text-[#566a7f] focus:border-[#03c3ec] focus:ring-2 focus:ring-[#03c3ec]/20 transition-all outline-none"
               placeholder={`พิมพ์คำว่า "${expectedWord}" เพื่อยืนยัน`} 
               autoFocus
             />
           </div>
         </div>
 
-        <div className="p-6 border-t border-slate-100 flex gap-4 bg-slate-50/50">
+        <div className="px-6 py-4 border-t border-[#d9dee3] flex gap-3 bg-slate-50/50 justify-end">
           <button 
             onClick={onClose} 
-            className={`flex-1 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 ${FONT.LABEL_BLACK} py-4 rounded-xl transition-all active:scale-95`}
+            className="px-5 py-2 rounded-md border border-[#d9dee3] text-[#566a7f] font-medium hover:bg-[#f8f9fa] transition-colors text-[14px]"
           >
             ยกเลิก
           </button>
           <button 
             onClick={handleConfirm} 
             disabled={input !== expectedWord}
-            className={`flex-1 py-4 rounded-xl ${FONT.LABEL_BLACK} transition-all active:scale-95 flex items-center justify-center gap-2 ${input === expectedWord ? 'bg-sky-500 hover:bg-sky-600 text-white shadow-lg shadow-sky-100' : 'bg-slate-200 text-slate-400 cursor-not-allowed'}`}
+            className="px-5 py-2 rounded-md font-medium text-[14px] transition-all flex items-center justify-center gap-2 disabled:opacity-50 hover:-translate-y-[1px] disabled:hover:translate-y-0 disabled:hover:shadow-none bg-[#03c3ec] hover:bg-[#02a9cd] text-white shadow-[0_4px_12px_rgba(3,195,236,0.4)] disabled:shadow-none"
           >
-            <CheckCircle2 size={20} /> ยืนยัน
+            <CheckCircle2 size={16} /> ยืนยัน
           </button>
         </div>
 

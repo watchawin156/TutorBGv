@@ -14,20 +14,24 @@ export const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({ show, on
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xl z-[150] flex items-center justify-center p-6 animate-in fade-in duration-500">
-      <div className="bg-white rounded-[40px] w-full max-w-md overflow-hidden shadow-2xl animate-in slide-in-from-bottom-10 duration-500 border border-rose-100">
-        <div className="p-10 border-b border-rose-50 flex flex-col items-center justify-center bg-rose-50/30 text-center">
-          <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-3xl flex items-center justify-center mb-6 shadow-sm"><AlertCircle size={32} /></div>
-          <h3 className={`${FONT.H4} text-rose-900 leading-tight`}>ยืนยันการลบข้อมูล</h3>
-          <p className={`text-rose-900 ${FONT.LABEL} mt-2`}>พิมพ์คำว่า <span className="text-rose-600 px-1 italic">"ยืนยัน"</span> เพื่อดำเนินการต่อ</p>
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[150] flex items-center justify-center p-4 animate-in fade-in duration-300">
+      <div className="bg-white rounded-xl w-full max-w-sm overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.15)] animate-in zoom-in-95 duration-300">
+        <div className="px-6 py-4 flex items-center justify-between border-b border-[#d9dee3]">
+          <div className="flex items-center gap-2 text-[#566a7f]">
+             <AlertCircle size={20} className="text-[#ff3e1d]" />
+             <h3 className="text-[18px] font-semibold">ยืนยันการลบข้อมูล</h3>
+          </div>
+          <button onClick={onClose} className="text-[#a1acb8] hover:text-[#566a7f] transition-colors"><X size={20} /></button>
         </div>
         
-        <div className="p-10 space-y-6">
-          <input type="text" value={confirmText} onChange={e => setConfirmText(e.target.value)} className={`w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-6 py-4 text-center ${FONT.BODY_LG} font-black focus:ring-4 focus:ring-rose-50/50 focus:border-rose-200 transition-all outline-none text-slate-900`} placeholder="......." />
-          <div className="flex gap-4">
-            <button onClick={onClose} className={`flex-1 bg-slate-50 hover:bg-slate-100 text-slate-900 ${FONT.LABEL_BLACK} py-4 rounded-xl transition-all`}>ยกเลิก</button>
-            <button onClick={onConfirm} disabled={confirmText !== 'ยืนยัน'} className={`flex-1 bg-rose-500 hover:bg-rose-600 disabled:opacity-30 disabled:grayscale text-white ${FONT.LABEL_BLACK} py-4 rounded-xl transition-all shadow-xl shadow-rose-100`}>ยืนยันการลบ</button>
-          </div>
+        <div className="p-6">
+          <p className="text-[14px] text-[#566a7f] mb-4">พิมพ์คำว่า <strong className="text-[#ff3e1d]">"ยืนยัน"</strong> เพื่อดำเนินการต่อ</p>
+          <input type="text" value={confirmText} onChange={e => setConfirmText(e.target.value)} className="w-full bg-white border border-[#d9dee3] rounded-md px-4 py-2 text-center text-[15px] font-medium text-[#566a7f] focus:border-[#ff3e1d] focus:ring-2 focus:ring-[#ff3e1d]/20 transition-all outline-none" placeholder="" />
+        </div>
+
+        <div className="px-6 py-4 border-t border-[#d9dee3] flex justify-end gap-3 bg-slate-50/50">
+           <button onClick={onClose} className="px-5 py-2 rounded-md border border-[#d9dee3] text-[#566a7f] font-medium hover:bg-[#f8f9fa] transition-colors text-[14px]">ยกเลิก</button>
+           <button onClick={onConfirm} disabled={confirmText !== 'ยืนยัน'} className="px-5 py-2 rounded-md bg-[#ff3e1d] disabled:opacity-50 hover:bg-[#e6381a] text-white font-medium transition-all text-[14px] hover:-translate-y-[1px] hover:shadow-[0_4px_12px_rgba(255,62,29,0.4)] disabled:hover:translate-y-0 disabled:hover:shadow-none">ยืนยัน</button>
         </div>
       </div>
     </div>
